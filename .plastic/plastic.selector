@@ -1,0 +1,4 @@
+repository "Shape_shifter@octochamp@cloud"
+  path "/"
+    br "/main"
+    co "/main"
