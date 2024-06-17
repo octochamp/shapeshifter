@@ -24,7 +24,7 @@ public class ButtonInteraction : MonoBehaviour
     private void OnSelectEntered(SelectEnterEventArgs args)
     {
         Debug.Log("OnSelect Entered");
-        buttonRenderer.material.color = Color.green;
+        buttonRenderer.material.color = new Color(1f, 1f, 0.5f, 0.5f);
         if (targetScript != null && !string.IsNullOrEmpty(methodName))
         {
             targetScript.SendMessage(methodName);
