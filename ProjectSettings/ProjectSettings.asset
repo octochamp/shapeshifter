@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Nathan & Lidi
+  companyName: Nathan and Lidi
   productName: Shapeshifter VR
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -139,8 +139,9 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.0.5-VR
-  preloadedAssets: []
+  bundleVersion: 0.0.6-VR
+  preloadedAssets:
+  - {fileID: 11400000, guid: f8a442de0c8906f4d9c00184993fc289, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
