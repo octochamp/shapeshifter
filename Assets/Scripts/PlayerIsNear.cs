@@ -2,30 +2,69 @@ using UnityEngine;
 
 public class AnimationTrigger : MonoBehaviour
 {
-    public float proximityRadius = 5f; // Adjust this value to set the desired proximity radius
-    public Animator animator;
-    public GameObject playerObject; // Reference to the GameObject representing the player's position
-    private bool isPlayerNear;
-
-    void Update()
+    [SerializeField]
+    private float _proximityRadius = 5f;
+    public float proximityRadius
     {
-        // Get the global position of the target GameObject
-        Vector3 targetGlobalPosition = transform.parent == null ? transform.position : transform.parent.TransformPoint(transform.localPosition);
-
-        // Check if the player is near the GameObject
-        isPlayerNear = Physics.CheckSphere(transform.position, proximityRadius, LayerMask.GetMask("Player"));
-
-        // Set the boolean parameter in the Animator to trigger the animation state transition
-       // Debug.Log("isPlayerNear: " + isPlayerNear);
-       // Debug.Log("Player Position: " + playerObject.transform.position);
-       // Debug.Log("GameObject Global Position: " + targetGlobalPosition);
-        animator.SetBool("IsPlayerNear", isPlayerNear);
+        get { return _proximityRadius; }
+        set { _proximityRadius = value; }
     }
 
-    void OnDrawGizmosSelected()
+    [SerializeField]
+    private Animator _animator;
+    public Animator animator
     {
-        // Draw a wireframe sphere to visualize the proximity radius in the Scene view
+        get { return _animator; }
+        set { _animator = value; }
+    }
+
+    [SerializeField]
+    private GameObject _playerObject;
+    public GameObject playerObject
+    {
+        get { return _playerObject; }
+        set { _playerObject = value; }
+    }
+
+    private bool _isPlayerNear;
+    public bool isPlayerNear
+    {
+        get { return _isPlayerNear; }
+        private set { _isPlayerNear = value; }
+    }
+
+    private void Start()
+    {
+        if (_animator == null)
+        {
+            Debug.LogWarning("Animator reference is not set on " + gameObject.name);
+            enabled = false;
+        }
+        if (_playerObject == null)
+        {
+            Debug.LogWarning("Player object reference is not set on " + gameObject.name);
+            enabled = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (_playerObject != null)
+        {
+            bool wasPlayerNear = _isPlayerNear;
+            float distanceToPlayer = Vector3.Distance(transform.position, _playerObject.transform.position);
+            _isPlayerNear = distanceToPlayer <= _proximityRadius;
+
+            if (wasPlayerNear != _isPlayerNear)
+            {
+                _animator.SetBool("IsPlayerNear", _isPlayerNear);
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, proximityRadius);
+        Gizmos.DrawWireSphere(transform.position, _proximityRadius);
     }
 }
